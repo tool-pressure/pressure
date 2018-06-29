@@ -1,13 +1,13 @@
 <div class="panel panel-primary">
     <div class="panel-heading">
-        Boom Run Configuration
+        Boom 运行配置
     </div>
     <div class="panel-body">
         {{ with .form }}
         <form class="form-horizontal" id="run_form" method="POST" action="/boom/run">
           <input type="hidden" name="job_id" value="{{ .Job.Id.Hex }}"/>
           <div class="form-group">
-            <label for="name" class="col-sm-2 control-label">Name</label>
+            <label for="name" class="col-sm-2 control-label">任务</label>
             <div class="col-sm-10">
                 <input type="text" readonly value="{{ .Job.Name }}" class="form-control">
             </div>
@@ -19,7 +19,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="timeout" class="col-sm-2 control-label">Timeout(s)</label>
+            <label for="timeout" class="col-sm-2 control-label">超时(s)</label>
             <div class="col-sm-10">
                 <input type="number" min=1 name="timeout" value="{{ .Job.Timeout }}" required class="form-control">
             </div>
@@ -28,7 +28,7 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" name="disable_keepalive" {{ if .Job.DisableKeepAlive }}checked{{ end }}>Disable KeepAlive
+                        <input type="checkbox" name="disable_keepalive" {{ if .Job.DisableKeepAlive }}checked{{ end }}>禁用KeepAlive
                     </label>
                 </div>
             </div>
@@ -37,23 +37,23 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" name="disable_compression" {{ if .Job.DisableCompression }}checked{{ end }}>Disable Compression
+                        <input type="checkbox" name="disable_compression" {{ if .Job.DisableCompression }}checked{{ end }}>禁用压缩
                     </label>
                 </div>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label">Concurrency Settings</label>
+            <label class="col-sm-2 control-label">并发设置</label>
             <div class="col-sm-10">
                 <table class="table table-bordered table-hover" id="rates_table">
                     <tbody>
                         {{ range .Job.Periods }}
                         <tr>
                             <td>
-                            <input type="number" min=1 name='concurrency' value="{{ .Concurrency }}" required title="Concurrency" placeholder='100' class="form-control"/>
+                            <input type="number" min=1 name='concurrency' value="{{ .Concurrency }}" required title="并发数" placeholder='100' class="form-control"/>
                             </td>
                             <td>
-                            <input type="number" min=1 name='duration' value="{{ .Duration }}" required title="Time of Duration(s)" placeholder='60' class="form-control"/>
+                            <input type="number" min=1 name='duration' value="{{ .Duration }}" required title="持续时长(s)" placeholder='60' class="form-control"/>
                             </td>
                             <td class="text-center">
                                 <a data-op='add_row' class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></a>
@@ -66,15 +66,15 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="comment" class="col-sm-2 control-label">Comment</label>
+            <label for="comment" class="col-sm-2 control-label">备注</label>
             <div class="col-sm-10">
-                <input type="text" required name="comment" value="" class="form-control" placeholder="write something for backtracing">
+                <input type="text" required name="comment" value="" class="form-control" placeholder="备注详情">
             </div>
           </div>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <a href="/boom/"class="btn btn-default">Cancel</a>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="/boom/"class="btn btn-default">取消</a>
+                <button type="submit" class="btn btn-primary">提交</button>
             </div>
           </div>
         </form>

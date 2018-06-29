@@ -36,7 +36,7 @@ var G_RunningBoomJobs = NewConcurrentSet()
 var G_StoppingBoomJobs = NewConcurrentSet()
 
 // teams for grouping jobs
-var G_AlexTeams = []string{"python"}
+var G_AlexTeams = []string{"hm503","hm701"}
 
 // Display Html page layout
 var G_ShowLayout = true

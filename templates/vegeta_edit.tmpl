@@ -9,11 +9,11 @@
           <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
-                <input type="text" name="name" value="{{ .Job.Name }}" class="form-control" required placeholder="Job Name">
+                <input type="text" name="name" value="{{ .Job.Name }}" class="form-control" required placeholder="任务名称">
             </div>
           </div>
           <div class="form-group">
-            <label for="team" class="col-sm-2 control-label">Team</label>
+            <label for="team" class="col-sm-2 control-label">组</label>
             <div class="col-sm-10">
                 <select name="team" class="form-control">
                     {{ range .Teams }}
@@ -23,9 +23,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="project" class="col-sm-2 control-label">Project Name</label>
+            <label for="project" class="col-sm-2 control-label">项目名称</label>
             <div class="col-sm-10">
-                <input type="text" name="project" value="{{ .Job.Project }}" class="form-control" required placeholder="Project Name">
+                <input type="text" name="project" value="{{ .Job.Project }}" class="form-control" required placeholder="项目名称">
             </div>
           </div>
           <div class="form-group">
@@ -96,9 +96,9 @@
                             </td>
                             <td>
                             {{ if $job.Jsonified }}
-                                <input type="text" name='data' value="{{ .JsonData }}" required title="Post Data Json" placeholder='Post Data Json' class="form-control"/>
+                                <textarea type="text" name='data'  required title="Post Data Json" placeholder='Post Data Json' class="form-control">{{ .JsonData }}</textarea>
                             {{ else }}
-                                <input type="text" name='data' value="{{ .Data|json }}" required title="Post Data Json" placeholder='Post Data Json' class="form-control"/>
+                                <textarea type="text" name='data'  required title="Post Data Json" placeholder='Post Data Json' class="form-control">{{ .Data|json }}</textarea>
                             {{ end }}
                             </td>
                             <td class="text-center">
@@ -115,8 +115,8 @@
           </div>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <a href="/vegeta/"class="btn btn-default">Cancel</a>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="/vegeta/"class="btn btn-default">取消</a>
+                <button type="submit" class="btn btn-primary">提交</button>
             </div>
           </div>
         </form>

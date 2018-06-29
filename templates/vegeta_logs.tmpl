@@ -13,14 +13,14 @@
         <table class="table table-striped">
             <tr>
                 <th>Job ID</th>
-                <th>Job Name</th>
+                <th>任务名称</th>
                 <th>Job Url</th>
                 <th>Host:Port</th>
                 <th>Comment</th>
                 <th>State</th>
                 <th>Start Time</th>
                 <th>End Time</th>
-                <th>Operations</th>
+                <th>业务操作</th>
             </tr>
             {{ range .logs }}
             <tr>
@@ -30,7 +30,7 @@
                 <td>{{if .JobDetail}}{{ range .JobDetail.Hosts }}{{.}}<br/>{{end}}{{end}}</td>
                 <td>{{ .Comment }}</td>
                 {{ if .IsRunning }}
-                <td><span class="label label-success">Running</td>
+                <td><span class="label label-success">运行</td>
                 {{ else }}
                 <td><span class="label label-default">Finished</td>
                 {{ end }}

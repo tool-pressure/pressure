@@ -1,6 +1,6 @@
 <div class="panel panel-default">
     <div clas="panel-header">
-        <span class="label label-primary">Boom Benchmark Report</label>
+        <span class="label label-primary">Boom 基准测试报告</label>
     </div>
     <div class="panel-body">
         <table class="table table-striped table-bordered">
@@ -10,7 +10,7 @@
                     <td><a class="btn btn-link" href="/boom/logs?job_id={{ .log.JobId }}">{{ .log.JobId }}</a></td>
                 </tr>
                 <tr>
-                    <td>Job Name</td>
+                    <td>任务名称</td>
                     <td>{{ .log.JobName }}</td>
                 </tr>
                 <tr>
@@ -19,7 +19,7 @@
                 </tr>
                 {{ if .log.JobDetail }}
                 <tr>
-                    <td>Team</td>
+                    <td>组</td>
                     <td>{{ .log.JobDetail.Team }}</td>
                 </tr>
                 <tr>
@@ -59,7 +59,7 @@
 </div>
 <div class="panel panel-default">
     <div class="panel-header">
-        <span class="label label-primary">Graphic Report</label>
+        <span class="label label-primary">图像报告</label>
     </div>
     <div class="panel-body">
         <div class="row">
@@ -76,12 +76,12 @@
 new Dygraph(
     document.getElementById("graph_concurrency_latency"),
     "Concurrency,Response Time/s\n" + {{ .log.ConcurrencyLatencyMetrics }},
-    {"title": "Concurrency-Response Time", "xlabel": "Concurrency", "ylabel": "Response Time(ms)"}
+    {"title": "并发响应时间", "xlabel": "并发数", "ylabel": "响应时间(ms)"}
 );
 new Dygraph(
     document.getElementById("graph_status_codes"),
     "Concurrency{{ range $code, $flag := .log.StatusCodesList }},{{ $code }}{{ end }}\n" + {{ .log.StatusCodesMetrics }},
-    {"title": "Concurrency-Status Counters", "xlabel": "Concurrency", "ylabel": "Counter"}
+    {"title": "并发状态码统计", "xlabel": "并发数", "ylabel": "个数"}
 );
 </script>
 <div class="panel panel-default">
@@ -91,16 +91,16 @@ new Dygraph(
     <div class="panel-body">
         <table class="table table-striped">
             <tr>
-                <th>Concurrency</th>
-                <th>Duration</th>
-                <th>Requests</th>
-                <th>SuccessRatio</th>
-                <th>Qps</th>
-                <th>Response Time[Mean]</th>
-                <th>Response Time[P95]</th>
-                <th>Response Time[P99]</th>
-                <th>Return Statuses</th>
-                <th>Error Counters</th>
+                <th>并发数</th>
+                <th>持续时长</th>
+                <th>总请求数</th>
+                <th>成功率</th>
+                <th>QPS (每秒请求数)</th>
+                <th>响应时间[Mean]</th>
+                <th>响应时间[P95]</th>
+                <th>响应时间[P99]</th>
+                <th>返回状态</th>
+                <th>错误数</th>
             </tr>
             {{ range .log.MetricsList }}
             <tr>
@@ -125,7 +125,7 @@ new Dygraph(
                     {{ if .ErrorDist }}
                     <a class="btn btn-lg btn-link"
                        data-toggle="popover"
-                       data-title="error counters"
+                       data-title="错误数"
                        data-html="true"
                        data-content="{{ range $key, $value := .ErrorDist }}<span class='label label-info'>{{ $key }}</span>=><span class='label label-default'>{{ $value }}</span><br/>{{ end }}">
                        <span class="glyphicon glyphicon-remove-circle"></span>
