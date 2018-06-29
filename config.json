@@ -1,0 +1,11 @@
+{
+	"BindAddr": "0.0.0.0:8000",
+	"MongoUrl": "mongodb://localhost:27017/alex",
+	"Teams": [
+		"python",
+		"java",
+		"php",
+		"go"
+	],
+	"ShowLayout": true
+}
