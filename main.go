@@ -59,6 +59,12 @@ func main() {
 		r.Get("/log/delete", DeleteBoomLog)
 		r.Get("/metrics", GetBoomMetrics)
 	})
+	m.Group("/plan", func(r martini.Router) {
+		r.Get("/",GetPlans)
+		r.Post("/create", CreateGetPlan)
+		r.Get("/edit", EditPlanPage)
+		r.Post("/edit", EditPlan)
+	})
 	// Let's fly
 	os.Setenv("HOST", G_AlexHost)
 	os.Setenv("PORT", fmt.Sprintf("%d", G_AlexPort))

@@ -1,0 +1,100 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">调度任务列表</div>
+    <div class="panel-body">
+        <form class="form-inline" method="GET" id="search-form">
+          <div class="form-group">
+            <label for="project" class="control-label">名称</label>
+            <input type="text" name="name" value="{{ .name }}" class="form-control" placeholder="名称">
+          </div>
+          <button type="submit" class="btn btn-primary">查询</button>
+          <a href="" class="btn btn-primary">刷新页面</a>
+          <button type="button" data-toggle="modal" data-target="#newJob" class="btn btn-success pull-right">新建调度</button>
+        </form>
+        <br/>
+        <table class="table table-striped">
+            <tr>
+                <th>任务ID</th>
+                <th>任务名</th>
+                <th>操作日期</th>
+                <th>业务操作</th>
+            </tr>
+            {{ range .tasks }}
+            <tr id="task-{{ .Id.Hex }}" data-id="{{ .Id.Hex }}" >
+                <td>
+                    <a class="btn btn-link btn-sm" data-container="body" data-toggle="popover" data-placement="top" data-content="{{ .Id.Hex }}"/>
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                    </a>
+                </td>
+                <td>{{ .Name }}</td>
+                <td>{{ .LastRunTs|strftime}}</td>
+                <td>
+                    <a class="btn btn-link" href="/plan/edit?plan_id={{ .Id.Hex }}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a href="javascript:void(0)"
+                        class="btn btn-link btn-sm"
+                        data-toggle="popover"
+                        data-html="true"
+                        data-placement="left"
+                        data-content="<a class='btn btn-danger' href='/plan/delete?plan_id={{ .Id.Hex }}'>Delete Now</a>"><span class="glyphicon glyphicon-remove"></span></a>
+                </td>
+            </tr>
+            {{ end }}
+        </table>
+        {{ template "pager" .pager }}
+        <div class="modal fade" id="newJob">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</span></button>
+                <h4 class="modal-title">新建调度</h4>
+              </div>
+              <div class="modal-body">
+                <form class="form-horizontal" method="POST" action="/plan/create" id="create-form">
+                  <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">任务名称</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="name" class="form-control" required placeholder="任务名称">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                      <button type="submit" class="btn btn-primary">提交</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('a[data-toggle=popover]').popover();
+        $('#create-form').submit(function() {
+            var team_el = $('#create-form select[name=team]');
+            if(team_el.val() == "") {
+                team_el.parent().addClass("has-error");
+                return false;
+            } else {
+                team_el.parent().removeClass("has-error");
+            }
+        });
+        /**
+        setInterval(function() {
+            $('tr[data-running=true]').each(function(_, el) {
+                var jobId = $(el).data("id");
+                $.get("/api/boom/state?plan_id=" + jobId, function(data) {
+                    if(data.is_running) {
+                        $('#state-' + jobId).html('<span class="label label-success">运行</span>');
+                    } else {
+                        $('#state-' + jobId).html('<span class="label label-default">退出</span>');
+                        $('#job-' + jobId).removeAttr("data-running");
+                    }
+                    $('#concurrency-' + jobId).html('<span class="badge">'+ data.current_concurrency +'</span>');
+                });
+            });
+        }, 2000);
+        */
+    });
+</script>

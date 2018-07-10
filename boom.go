@@ -513,3 +513,19 @@ func NewRandomBoomShooter(job *BoomJob) *RandomShooter {
 		L:       l,
 	}
 }
+
+func FindAllBooms( ) []BoomJob {
+	total, err := G_MongoDB.C("boom_jobs").Find(nil).Count()
+	if err != nil {
+		log.Panic(err)
+	}
+	var pager = NewPager(20, total)
+	pager.CurrentPage, err = strconv.Atoi("0")
+	var booms []BoomJob
+	err = G_MongoDB.C("boom_jobs").Find(nil).Skip(pager.Offset()).Sort("-lastrunts").Limit(pager.Limit()).All(&booms)
+	if err != nil {
+		log.Panic(err)
+	}
+	fmt.Sprintf("booms %+v",booms)
+	return booms
+}

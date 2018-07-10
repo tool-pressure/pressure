@@ -539,3 +539,19 @@ func NewRandomVegetaTargeter(job *VegetaJob) vegeta.Targeter {
 	}
 	return vegeta.NewStaticTargeter(targets...)
 }
+
+func FindAllVegetas()  []VegetaJob {
+	total, err := G_MongoDB.C("vegeta_jobs").Find(nil).Count()
+	if err != nil {
+		log.Panic(err)
+	}
+	var pager = NewPager(20, total)
+	pager.CurrentPage, err = strconv.Atoi("0")
+	var vegetas []VegetaJob
+	err = G_MongoDB.C("vegeta_jobs").Find(nil).Skip(pager.Offset()).Sort("-lastrunts").Limit(pager.Limit()).All(&vegetas)
+	if err != nil {
+		log.Panic(err)
+	}
+	fmt.Sprintf("vegetas %+v",vegetas)
+	return vegetas
+}
